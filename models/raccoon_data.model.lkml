@@ -25,13 +25,14 @@ persist_with: raccoon_data_default_datagroup
 # Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
 # Each joined view also needs to define a primary key.
 
-explore: dataset_1 {
-  join: dataset_2 {
+explore: campaign_users {
+  label: "Campaign Data"
+  join: campaign_cost {
     type: left_outer
-    sql_on: ${dataset_1.year} = ${dataset_2.year}
-            AND ${dataset_1.month} = ${dataset_2.month}
-            AND ${dataset_1.channel} = ${dataset_2.channel}
-            AND ${dataset_1.campaign} = ${dataset_2.campaign};;
+    sql_on: ${campaign_users.year} = ${campaign_cost.year}
+            AND ${campaign_users.month} = ${campaign_cost.month}
+            AND ${campaign_users.channel} = ${campaign_cost.channel}
+            AND ${campaign_users.campaign} = ${campaign_cost.campaign};;
     relationship: many_to_one
   }
 

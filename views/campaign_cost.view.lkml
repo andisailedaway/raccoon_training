@@ -1,5 +1,5 @@
 # The name of this view in Looker is "Dataset 2"
-view: dataset_2 {
+view: campaign_cost {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: `raccoon_training.Dataset_2`

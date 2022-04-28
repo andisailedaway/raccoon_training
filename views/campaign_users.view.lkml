@@ -1,5 +1,5 @@
 # The name of this view in Looker is "Dataset 1"
-view: dataset_1 {
+view: campaign_users {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: `raccoon_training.Dataset_1`
@@ -47,9 +47,41 @@ view: dataset_1 {
     sql: ${TABLE}.month ;;
   }
 
+  dimension: month_num {
+    type: string
+    #hidden: yes
+    sql:  CASE WHEN ${TABLE}.month = 'Janeiro' THEN '01'
+                WHEN ${TABLE}.month = 'Fevereiro' THEN '02'
+                WHEN ${TABLE}.month = 'Março' THEN '03'
+                WHEN ${TABLE}.month = 'Abril' THEN '04'
+                WHEN ${TABLE}.month = 'Maio' THEN '05'
+                WHEN ${TABLE}.month = 'Junho' THEN '06'
+                WHEN ${TABLE}.month = 'Julho' THEN '07'
+                WHEN ${TABLE}.month = 'Agosto' THEN '08'
+                WHEN ${TABLE}.month = 'Setembro' THEN '09'
+                WHEN ${TABLE}.month = 'Outubro' THEN '10'
+                WHEN ${TABLE}.month = 'Novembro' THEN '11'
+                WHEN ${TABLE}.month = 'Dezembro' THEN '12'
+                ELSE ${TABLE}.month
+          END;;
+  }
+
   dimension: year {
-    type: number
+    type: string
     sql: ${TABLE}.year ;;
+  }
+
+  dimension: year_num {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.year ;;
+  }
+
+  dimension_group: date {
+    type: time
+    datatype: yyyymmdd
+    timeframes: [year, quarter, month]
+    sql: CAST(CONCAT(${year_num}, ${month_num},'01') AS INT) ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
