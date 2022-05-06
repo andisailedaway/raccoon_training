@@ -4,13 +4,12 @@ view: campaign_users {
   sql_table_name: `raccoon_training.Dataset_1`;;
 
 
-  dimension: bounces {
-    type: number
-    sql: ${TABLE}.bounces ;;
-  }
+
 
   dimension: combo_primary {
     primary_key: yes
+    description: "This is only used for a primary key."
+    hidden: yes
     type: string
     sql: CONCAT(${year},${month}, ${channel}, ${campaign}) ;;
   }
@@ -21,6 +20,7 @@ view: campaign_users {
   }
 
   dimension: channel {
+    description: "Standard channel labels."
     type: string
     sql: ${TABLE}.channel ;;
   }
@@ -38,6 +38,12 @@ view: campaign_users {
   dimension: month {
     type: string
     sql: ${TABLE}.month ;;
+  }
+
+  dimension: year_month {
+    type: string
+    sql: CONCAT(${year},'_',${month}) ;;
+
   }
 
   dimension: month_num {
@@ -86,4 +92,45 @@ view: campaign_users {
     type: sum
     sql: ${TABLE}.users ;;
   }
+
+  dimension: bounces {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.bounces ;;
+  }
+
+  measure: total_bounces {
+    type: sum
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+  }
+
+  measure: average_bounces {
+    type: average
+    group_label: "Bounces"
+    value_format: "#,###.00"
+    sql: ${bounces} ;;
+  }
+
+  measure: average_bounces_Santos {
+    type: average
+    description: "Average Bounces only including the city of Santos."
+    group_label: "Bounces"
+    value_format: "#,###.00"
+    sql: ${bounces} ;;
+    filters: [city: "Santos"]
+  }
+
+  measure: min_bounces {
+    type: min
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+  }
+
+  measure: max_bounces {
+    type: max
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+  }
+
 }
