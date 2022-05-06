@@ -130,6 +130,7 @@ view: campaign_users {
 
   measure: max_bounces {
     type: max
+    description: "Maximum bounces."
     group_label: "Bounces"
     sql: ${bounces} ;;
   }
