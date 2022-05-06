@@ -123,6 +123,7 @@ view: campaign_users {
 
   measure: min_bounces {
     type: min
+    description: "Minimum bounces."
     group_label: "Bounces"
     sql: ${bounces} ;;
   }
