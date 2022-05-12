@@ -6,6 +6,7 @@ view: campaign_users {
 
   dimension: bounces {
     type: number
+    hidden: yes
     sql: ${TABLE}.bounces ;;
   }
 
@@ -38,6 +39,11 @@ view: campaign_users {
   dimension: month {
     type: string
     sql: ${TABLE}.month ;;
+  }
+
+  dimension: year_month {
+    type: string
+    sql:  CONCAT(${year}, '-', ${month}) ;;
   }
 
   dimension: month_num {
@@ -86,4 +92,26 @@ view: campaign_users {
     type: sum
     sql: ${TABLE}.users ;;
   }
+
+  measure: total_bounces  {
+    type: sum
+    sql: ${bounces} ;;
+  }
+
+  measure: average_bounces {
+    type: average
+    value_format: "#,###.00"
+    sql: ${bounces} ;;
+  }
+
+  measure: min_bounces {
+    type:  min
+    sql: ${bounces} ;;
+  }
+
+  measure: max_bounces {
+    type:  max
+    sql: ${bounces} ;;
+  }
+
 }

@@ -27,4 +27,13 @@ persist_with: raccoon_data_default_datagroup
 
 explore: campaign_users {
   label: "Campaign Data"
+  join: campaign_cost_bernardo {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${campaign_users.combo_primary} = ${campaign_cost_bernardo.combo_primary} ;;
+  }
+}
+
+explore: campaign_cost_bernardo {
+  label: "Campaign Cost Data"
 }
