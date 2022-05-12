@@ -40,6 +40,11 @@ view: campaign_users {
     sql: ${TABLE}.month ;;
   }
 
+  dimension: year_month {
+    type: string
+    sql: CONCAT(${year},"_",${month}) ;;
+  }
+
   dimension: month_num {
     type: string
     #hidden: yes
@@ -85,5 +90,21 @@ view: campaign_users {
   measure: users {
     type: sum
     sql: ${TABLE}.users ;;
+  }
+
+  measure: average_bounces{
+    type: average
+    group_label: "Bounces"
+    value_format: "#,###.00"
+    sql: ${bounces} ;;
+  }
+
+  measure: average_bounces_Santos{
+    type: average
+    description: "Average Bounces only including Santos"
+    group_label: "Bounces"
+    value_format: "#,###.00"
+    sql: ${bounces} ;;
+    filters: [city: "Santos"]
   }
 }
