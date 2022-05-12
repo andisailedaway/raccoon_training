@@ -98,12 +98,6 @@ view: campaign_users {
     sql: ${TABLE}.users ;;
   }
 
-  dimension: bounces {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.bounces ;;
-  }
-
   measure: total_bounces {
     type: sum
     group_label: "Bounces"
