@@ -135,4 +135,59 @@ view: campaign_users {
     sql: ${bounces} ;;
   }
 
+  # view: incident_table__incident_types {
+
+  #   dimension: incident_table__incident_types {
+  #     type: string
+  #     primary_key: yes
+  #     sql: incident_table__incident_types ;;
+  #   }
+
+  # explore: open_cases {
+  #   hidden: no
+
+  #   join: custom_fields {
+  #     view_label: "SOAR Custom fields"
+  #     sql: LEFT JOIN UNNEST(${open_cases.custom_fields_nested}) as custom_fields ;;
+  #     relationship: one_to_many
+  #   }
+
+  #   join: incident_types {
+  #     view_label: "Incident types"
+  #     sql: LEFT JOIN UNNEST(${open_cases.incident_types_nested}) as incident_types ;;
+  #     relationship: one_to_many
+  #   }
+  # }
+
+  # dimension: rule_name {
+  #   type: string
+  #   sql:  ${TABLE}.rule_name ;;
+  #   link: {
+  #     label: "Rule Name Explore"
+  #     url: "https://exabeamembeddev.cloud.looker.com/explore/anomalies/anomaly_fields?fields=anomaly_fields.user,anomaly_fields.rule_id,anomaly_fields.rule_reason,anomaly_fields.count&f[anomaly_fields.rule_name]={{ value }}"
+  #   }
+  # }
+
+  # # Count of all users and assets
+  # measure: users_and_assets_count {
+  #   description: "Count of distinct users and assets."
+  #   type: number
+  #   sql: ${user_count} + ${dest_host_count} + ${src_host_count} ;;
+  #   drill_fields: [usecase_details*]
+  # }
+
+  # set: user_details {
+  #   fields: [user, count]
+  # }
+
+  # set: rule_details {
+  #   fields: [incident_creation_time_date, user]
+  # }
+
+  # set: usecase_details {
+  #   fields: [src_host, dest_host, user, rule_name, count]
+  # }
+
+
+
 }
