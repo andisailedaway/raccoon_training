@@ -36,3 +36,4 @@ explore: campaign_users {
     relationship: many_to_one
   }
   }
+
