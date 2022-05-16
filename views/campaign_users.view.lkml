@@ -4,11 +4,6 @@ view: campaign_users {
   sql_table_name: `raccoon_training.Dataset_1`;;
 
 
-  dimension: bounces {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.bounces ;;
-  }
 
 
   dimension: combo_primary {
@@ -47,7 +42,7 @@ view: campaign_users {
 
   dimension: year_month {
     type: string
-    sql:  CONCAT(${year}, '-', ${month}) ;;
+    sql: CONCAT(${year},'_',${month}) ;;
 
   }
 
@@ -98,6 +93,12 @@ view: campaign_users {
     sql: ${TABLE}.users ;;
   }
 
+  dimension: bounces {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.bounces ;;
+  }
+
   measure: total_bounces {
     type: sum
     group_label: "Bounces"
@@ -132,6 +133,50 @@ view: campaign_users {
     description: "Maximum bounces."
     group_label: "Bounces"
     sql: ${bounces} ;;
+    drill_fields: [campaign, channel, city]
   }
+
+
+  # set: user_details {
+  #   fields: [user, count]
+  # }
+
+  # view: incident_table__incident_types {
+
+  #   dimension: incident_table__incident_types {
+  #     type: string
+  #     primary_key: yes
+  #     sql: incident_table__incident_types ;;
+  #   }
+
+  # explore: open_cases {
+  #   hidden: no
+
+  #   join: custom_fields {
+  #     view_label: "SOAR Custom fields"
+  #     sql: LEFT JOIN UNNEST(${open_cases.custom_fields_nested}) as custom_fields ;;
+  #     relationship: one_to_many
+  #   }
+
+  #   join: incident_types {
+  #     view_label: "Incident types"
+  #     sql: LEFT JOIN UNNEST(${open_cases.incident_types_nested}) as incident_types ;;
+  #     relationship: one_to_many
+  #   }
+  # }
+
+  # dimension: rule_name {
+  #   type: string
+  #   sql:  ${TABLE}.rule_name ;;
+  #   link: {
+  #     label: "Rule Name Explore"
+  #     url: "https://exabeamembeddev.cloud.looker.com/explore/anomalies/anomaly_fields?fields=anomaly_fields.user,anomaly_fields.rule_id,anomaly_fields.rule_reason,anomaly_fields.count&f[anomaly_fields.rule_name]={{ value }}"
+  #   }
+  # }
+
+
+
+
+
 
 }

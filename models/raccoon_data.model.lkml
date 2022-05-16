@@ -27,13 +27,13 @@ persist_with: raccoon_data_default_datagroup
 
 explore: campaign_users {
   label: "Campaign Data"
-  join: campaign_cost_bernardo {
+  join: campaign_cost {
     type: left_outer
-    relationship: one_to_many
-    sql_on: ${campaign_users.combo_primary} = ${campaign_cost_bernardo.combo_primary} ;;
+    sql_on: ${campaign_users.year} = ${campaign_cost.year}
+            AND ${campaign_users.month} = ${campaign_cost.month}
+            AND ${campaign_users.channel} = ${campaign_cost.channel}
+            AND ${campaign_users.campaign} = ${campaign_cost.campaign};;
+    relationship: many_to_one
   }
-}
+  }
 
-explore: campaign_cost_bernardo {
-  label: "Campaign Cost Data"
-}
