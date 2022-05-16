@@ -133,7 +133,13 @@ view: campaign_users {
     description: "Maximum bounces."
     group_label: "Bounces"
     sql: ${bounces} ;;
+    drill_fields: [campaign, channel, city]
   }
+
+
+  # set: user_details {
+  #   fields: [user, count]
+  # }
 
   # view: incident_table__incident_types {
 
@@ -168,25 +174,8 @@ view: campaign_users {
   #   }
   # }
 
-  # # Count of all users and assets
-  # measure: users_and_assets_count {
-  #   description: "Count of distinct users and assets."
-  #   type: number
-  #   sql: ${user_count} + ${dest_host_count} + ${src_host_count} ;;
-  #   drill_fields: [usecase_details*]
-  # }
 
-  # set: user_details {
-  #   fields: [user, count]
-  # }
 
-  # set: rule_details {
-  #   fields: [incident_creation_time_date, user]
-  # }
-
-  # set: usecase_details {
-  #   fields: [src_host, dest_host, user, rule_name, count]
-  # }
 
 
 
