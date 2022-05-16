@@ -26,14 +26,13 @@ persist_with: raccoon_data_default_datagroup
 # Each joined view also needs to define a primary key.
 
 explore: campaign_users {
-  join: campaign_cost_gustavo {
-    type: left_outer
-    relationship: one_to_one
-    sql_on: ${campaign_users.campaign} = ${campaign_cost_gustavo.campaign} ;;
-  }
   label: "Campaign Data"
-}
-
-explore: campaign_cost_gustavo {
-  label: "Campaign Data 2"
-}
+  join: campaign_cost {
+    type: left_outer
+    sql_on: ${campaign_users.year} = ${campaign_cost.year}
+            AND ${campaign_users.month} = ${campaign_cost.month}
+            AND ${campaign_users.channel} = ${campaign_cost.channel}
+            AND ${campaign_users.campaign} = ${campaign_cost.campaign};;
+    relationship: many_to_one
+  }
+  }

@@ -4,13 +4,12 @@ view: campaign_users {
   sql_table_name: `raccoon_training.Dataset_1`;;
 
 
-  dimension: bounces {
-    type: number
-    sql: ${TABLE}.bounces ;;
-  }
+
 
   dimension: combo_primary {
     primary_key: yes
+    description: "This is only used for a primary key."
+    hidden: yes
     type: string
     sql: CONCAT(${year},${month}, ${channel}, ${campaign}) ;;
   }
@@ -21,6 +20,7 @@ view: campaign_users {
   }
 
   dimension: channel {
+    description: "Standard channel labels."
     type: string
     sql: ${TABLE}.channel ;;
   }
@@ -42,7 +42,8 @@ view: campaign_users {
 
   dimension: year_month {
     type: string
-    sql: CONCAT(${year},"_",${month}) ;;
+    sql: CONCAT(${year},'_',${month}) ;;
+
   }
 
   dimension: month_num {
@@ -92,19 +93,90 @@ view: campaign_users {
     sql: ${TABLE}.users ;;
   }
 
-  measure: average_bounces{
+  dimension: bounces {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.bounces ;;
+  }
+
+  measure: total_bounces {
+    type: sum
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+  }
+
+  measure: average_bounces {
     type: average
     group_label: "Bounces"
     value_format: "#,###.00"
     sql: ${bounces} ;;
   }
 
-  measure: average_bounces_Santos{
+  measure: average_bounces_Santos {
     type: average
-    description: "Average Bounces only including Santos"
+    description: "Average Bounces only including the city of Santos."
     group_label: "Bounces"
     value_format: "#,###.00"
     sql: ${bounces} ;;
     filters: [city: "Santos"]
   }
+
+  measure: min_bounces {
+    type: min
+    description: "Minimum bounces."
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+  }
+
+  measure: max_bounces {
+    type: max
+    description: "Maximum bounces."
+    group_label: "Bounces"
+    sql: ${bounces} ;;
+    drill_fields: [campaign, channel, city]
+  }
+
+
+  # set: user_details {
+  #   fields: [user, count]
+  # }
+
+  # view: incident_table__incident_types {
+
+  #   dimension: incident_table__incident_types {
+  #     type: string
+  #     primary_key: yes
+  #     sql: incident_table__incident_types ;;
+  #   }
+
+  # explore: open_cases {
+  #   hidden: no
+
+  #   join: custom_fields {
+  #     view_label: "SOAR Custom fields"
+  #     sql: LEFT JOIN UNNEST(${open_cases.custom_fields_nested}) as custom_fields ;;
+  #     relationship: one_to_many
+  #   }
+
+  #   join: incident_types {
+  #     view_label: "Incident types"
+  #     sql: LEFT JOIN UNNEST(${open_cases.incident_types_nested}) as incident_types ;;
+  #     relationship: one_to_many
+  #   }
+  # }
+
+  # dimension: rule_name {
+  #   type: string
+  #   sql:  ${TABLE}.rule_name ;;
+  #   link: {
+  #     label: "Rule Name Explore"
+  #     url: "https://exabeamembeddev.cloud.looker.com/explore/anomalies/anomaly_fields?fields=anomaly_fields.user,anomaly_fields.rule_id,anomaly_fields.rule_reason,anomaly_fields.count&f[anomaly_fields.rule_name]={{ value }}"
+  #   }
+  # }
+
+
+
+
+
+
 }
